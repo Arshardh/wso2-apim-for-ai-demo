@@ -35,7 +35,7 @@ All guardrails work by extracting content using JSONPath expressions, analyzing 
 
 ### 🤖 AI-Specific Protection  
 - **Advanced Hallucination Guardrail by WSO2** - Detects AI-generated misinformation with optional knowledge grounding
-- **Advanced Prompt Injection Guardrail by WSO2** - Prevents jailbreak and prompt injection attacks
+- **Advanced Prompt Injection Guardrail by WSO2** - Prevents prompt injection attacks
 - **Semantic Prompt Guardrail** - Uses semantic similarity to allow/deny prompts based on predefined rules
 
 ### 🔒 PII Protection
@@ -62,7 +62,7 @@ All guardrails work by extracting content using JSONPath expressions, analyzing 
 Before using these guardrails, ensure you have:
 
 1. **WSO2 API Manager** with Universal Gateway
-2. **GuardrailsAI service** (required for WSO2-powered guardrails: Content Safety, Hallucination, Jailbreak, PII) [WSO2 GuardrailsAI Provider Configuration](#service-configuration)
+2. **GuardrailsAI service** (required for WSO2-powered guardrails: Content Safety, Hallucination, Prompt Injection, PII) [WSO2 GuardrailsAI Provider Configuration](#service-configuration)
 3. **Vector database** (optional, needed for semantic caching and hallucination detection with knowledge grounding)
 4. **Embedding provider service** (optional, needed for semantic caching and hallucination detection with knowledge grounding)
 
@@ -70,7 +70,7 @@ Before using these guardrails, ensure you have:
 
 ### 1. WSO2 GuardrailsAI Provider Configuration
 
-For WSO2-powered guardrails (Content Safety, Hallucination, Jailbreak, PII):
+For WSO2-powered guardrails (Content Safety, Hallucination, Prompt Injection, PII):
 
 ```toml
 [[apim.ai.guardrail_provider]]
@@ -278,7 +278,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 
 #### Advanced Prompt Injection Guardrail by WSO2
 
-**Purpose**: Prevents malicious prompt injection attacks and jailbreak attempts
+**Purpose**: Prevents malicious prompt injection attacks
 
 **Applicable Flows**: Request
 
@@ -286,7 +286,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 
 | Parameter | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `Guardrail Name` | String | Unique name for tracking | `"Jailbreak Protection"` |
+| `Guardrail Name` | String | Unique name for tracking | `"Prompt Injection Protection"` |
 | `Threshold` | Integer | Detection sensitivity (0-100) | `90` |
 | `JSON Path` | String | Path to extract user input | `"$.messages[-1].content"` |
 
