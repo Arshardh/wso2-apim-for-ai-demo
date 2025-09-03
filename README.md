@@ -162,6 +162,7 @@ embedding_model = "<openai-embedding-model>"
   - https://huggingface.co/meta-llama/Llama-3.2-3B
   - https://huggingface.co/meta-llama/Llama-Guard-3-1B
   - https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+- Generate a token from [Hugging Face](https://huggingface.co/settings/tokens) and set as an environment variable. (i.e. `export HF_TOKEN="your_huggingface_token"`)
 - Start the [guardrails service](./guardrails-service/). This will launch a Python FastAPI application listening on port `8000`.
 
 ## How to Add Guardrails to APIs
