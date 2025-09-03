@@ -28,21 +28,21 @@ All guardrails work by extracting content using JSONPath expressions, analyzing 
 
 ## Guardrail Categories
 
-### 🛡️ Content Safety & Filtering
+### Content Safety & Filtering
 - **Advanced Content Safety Guardrail by WSO2** - Multi-category harmful content detection
 - **Azure Content Safety Content Moderation** - Azure-powered content filtering with severity levels
 - **AWS Bedrock Guardrail** - AWS Bedrock-powered content safety and PII protection
 
-### 🤖 AI-Specific Protection  
+### AI-Specific Protection  
 - **Advanced Hallucination Guardrail by WSO2** - Detects AI-generated misinformation with optional knowledge grounding
 - **Advanced Prompt Injection Guardrail by WSO2** - Prevents prompt injection attacks
 - **Semantic Prompt Guardrail** - Uses semantic similarity to allow/deny prompts based on predefined rules
 
-### 🔒 PII Protection
+### PII Protection
 - **Advanced PII Guardrail by WSO2** - AI-powered PII detection and masking
 - **PII Masking with Regex** - Regex-based PII detection and masking
 
-### ✅ Content Validation
+### Content Validation
 - **Regex Guardrail** - Pattern-based content validation
 - **JSON Schema Guardrail** - Enforce JSON structure compliance
 - **Content Length Guardrail** - Validate content size limits
@@ -50,11 +50,11 @@ All guardrails work by extracting content using JSONPath expressions, analyzing 
 - **Sentence Count Guardrail** - Validate sentence count limits
 - **URL Guardrail** - Extract and validate URLs with DNS/connection checks
 
-### 🎨 Prompt Enhancement
+### Prompt Enhancement
 - **Prompt Decorator** - Dynamically modify prompts with custom decorations
 - **Prompt Template** - Apply template-based prompt transformations
 
-### ⚡ Performance & Caching
+### Performance & Caching
 - **Semantic Cache** - Cache AI responses based on semantic similarity (available in enterprise versions)
 
 ## Prerequisites
@@ -155,6 +155,15 @@ embedding_endpoint = "https://api.openai.com/v1/embeddings"
 embedding_model = "<openai-embedding-model>"
 ```
 
+### 6. Configure WSO2 Advanced Guardrails Service
+
+- First login to [Hugging Face](https://huggingface.co/login).
+- Request to access the following models.
+  - https://huggingface.co/meta-llama/Llama-3.2-3B
+  - https://huggingface.co/meta-llama/Llama-Guard-3-1B
+  - https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+- Start the [guardrails service](./guardrails-service/). This will launch a Python FastAPI application listening on port `8000`.
+
 ## How to Add Guardrails to APIs
 
 Follow these steps to integrate any guardrail policy into your WSO2 API Manager AI APIs:
@@ -201,7 +210,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 
 ## Guardrail Configuration Details
 
-### 🛡️ Content Safety & Filtering
+### Content Safety & Filtering
 
 #### Advanced Content Safety Guardrail by WSO2
 
@@ -258,7 +267,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 | `JSON Path` | String | Path to extract content | `"$.messages[-1].content"` |
 | `Redact PII` | Boolean | Permanently redact detected PII | `false` |
 
-### 🤖 AI-Specific Protection
+### AI-Specific Protection
 
 #### Advanced Hallucination Guardrail by WSO2
 
@@ -319,7 +328,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 }
 ```
 
-### 🔒 PII Protection
+### PII Protection
 
 #### Advanced PII Guardrail by WSO2
 
@@ -379,7 +388,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 ]
 ```
 
-### ✅ Content Validation
+### Content Validation
 
 #### Regex Guardrail
 
@@ -474,7 +483,7 @@ Follow these steps to integrate any guardrail policy into your WSO2 API Manager 
 | `Perform DNS Lookup` | Boolean | DNS lookup vs. connection test | `true` |
 | `Connection Timeout` | Integer | Timeout in milliseconds | `3000` |
 
-### 🎨 Prompt Enhancement
+### Prompt Enhancement
 
 #### Prompt Decorator
 
