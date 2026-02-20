@@ -18,7 +18,7 @@ class ContentSafetyResponse(BaseModel):
 class ContentSafetyGuardrail(Validator):
     def __init__(
         self,
-        model_name: str = "https://huggingface.co/meta-llama/Llama-Guard-3-1B",
+        model_name: str = "meta-llama/Llama-Guard-3-1B",
         quant: bool = False,
         device: Optional[Union[str, int]] = -1,
         on_fail: Optional[Callable] = None,
