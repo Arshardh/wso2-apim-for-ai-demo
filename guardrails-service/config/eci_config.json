@@ -1,0 +1,286 @@
+{
+  "_comment": "Enterprise Confidential Information (ECI) Configuration",
+  "_instructions": [
+    "Edit this file to match your organization's specific sensitive information.",
+    "Set 'enabled: false' to disable any category without deleting it.",
+    "Keywords: exact phrases (case-insensitive) that should always be masked.",
+    "Patterns: regex patterns for structured internal formats (set is_regex: true).",
+    "slm_description: tells the AI what to look for contextually in this category.",
+    "sensitivity_level: 1=Confidential, 2=Internal Only, 3=Restricted"
+  ],
+
+  "company_name": "Acme Corporation",
+
+  "slm_enabled": true,
+  "slm_model": "microsoft/Phi-3.5-mini-instruct",
+  "confidence_threshold": 0.70,
+
+  "categories": {
+
+    "hr_data": {
+      "entity_type": "ECI_HR_DATA",
+      "token_label": "HR_DATA",
+      "description": "Employee HR information: leave, sick days, performance, salary, personal status",
+      "sensitivity_level": 3,
+      "enabled": true,
+      "slm_description": "employee leave periods, sick leave, medical absences, performance reviews, salary figures, pay grades, bonus amounts, disciplinary actions, personal employee status or wellbeing, employee availability periods, vacation schedules, maternity or paternity leave",
+
+      "keywords": [
+        {"value": "on leave",          "description": "Generic leave reference"},
+        {"value": "out of office",      "description": "OOO absence marker"},
+        {"value": "sick leave",         "description": "Medical absence"},
+        {"value": "medical leave",      "description": "Medical absence formal"},
+        {"value": "annual leave",       "description": "Scheduled vacation"},
+        {"value": "parental leave",     "description": "Maternity/paternity leave"},
+        {"value": "maternity leave",    "description": "Maternity leave"},
+        {"value": "paternity leave",    "description": "Paternity leave"},
+        {"value": "performance review", "description": "HR review cycle"},
+        {"value": "performance improvement plan", "description": "PIP"},
+        {"value": "PIP",                "description": "Performance improvement plan abbrev"},
+        {"value": "salary band",        "description": "Compensation structure"},
+        {"value": "compensation package","description": "Full comp reference"},
+        {"value": "total compensation", "description": "Total comp reference"},
+        {"value": "bonus target",       "description": "Incentive pay"},
+        {"value": "headcount",          "description": "Staffing levels"},
+        {"value": "headcount reduction","description": "Layoff/downsizing"},
+        {"value": "redundancy",         "description": "UK term for layoffs"},
+        {"value": "restructuring",      "description": "Org change event"},
+        {"value": "termination",        "description": "Employment end"},
+        {"value": "resignation",        "description": "Voluntary departure"},
+        {"value": "notice period",      "description": "Employment transition"},
+        {"value": "garden leave",       "description": "UK paid leave during notice"},
+        {"value": "probation",          "description": "New employee trial period"},
+        {"value": "probationary period","description": "New employee trial period full"},
+        {"value": "HR review",          "description": "Human resources review"},
+        {"value": "360 review",         "description": "Peer review process"},
+        {"value": "pay grade",          "description": "Compensation level"},
+        {"value": "pay scale",          "description": "Compensation scale"},
+        {"value": "off sick",           "description": "Informal sick leave"},
+        {"value": "off work",           "description": "Absence from work"},
+        {"value": "out for",            "description": "Duration absence marker"},
+        {"value": "recovering from",    "description": "Medical recovery context"}
+      ],
+
+      "patterns": [
+        {
+          "value": "\\b(taking|on|starting)\\s+(a\\s+)?(few\\s+weeks?|\\d+\\s+weeks?|\\d+\\s+days?)\\s+(off|leave|break)\\b",
+          "is_regex": true,
+          "description": "Informal leave duration phrases"
+        },
+        {
+          "value": "\\b(salary|compensation|base\\s+pay)\\s+(of|is|was|will\\s+be)\\s+\\$?[\\d,]+\\b",
+          "is_regex": true,
+          "description": "Explicit salary figures"
+        },
+        {
+          "value": "\\b(L\\d|Level\\s+\\d|Grade\\s+[A-Z]\\d?)\\b",
+          "is_regex": true,
+          "description": "Internal compensation level codes e.g. L5, Level 6, Grade B2"
+        },
+        {
+          "value": "\\b\\d+%\\s+(pay\\s+rise|raise|increase|bonus)\\b",
+          "is_regex": true,
+          "description": "Percentage pay changes"
+        },
+        {
+          "value": "\\b(will\\s+be|is|was)\\s+(out|away|off|unavailable)\\s+(until|for|through)\\b",
+          "is_regex": true,
+          "description": "Absence duration pattern"
+        }
+      ]
+    },
+
+    "projects": {
+      "entity_type": "ECI_PROJECT",
+      "token_label": "PROJECT",
+      "description": "Internal project names, codenames, initiatives, and roadmap items",
+      "sensitivity_level": 2,
+      "enabled": true,
+      "slm_description": "internal project names, codenames, initiative titles, product roadmap items, internal program names, strategic initiative names, internal workstreams, internal milestones, unreleased product names",
+
+      "keywords": [
+        {"value": "Project Phoenix",     "description": "Internal project codename"},
+        {"value": "Project Atlas",       "description": "Internal project codename"},
+        {"value": "Project Titan",       "description": "Internal project codename"},
+        {"value": "Operation Sunrise",   "description": "Internal initiative codename"},
+        {"value": "Aurora initiative",   "description": "Strategic initiative"},
+        {"value": "Q3 roadmap",          "description": "Quarterly planning doc"},
+        {"value": "Q4 roadmap",          "description": "Quarterly planning doc"},
+        {"value": "2025 roadmap",        "description": "Annual roadmap"},
+        {"value": "product roadmap",     "description": "Generic roadmap reference"},
+        {"value": "internal launch",     "description": "Pre-public launch reference"},
+        {"value": "soft launch",         "description": "Limited release"},
+        {"value": "beta program",        "description": "Pre-release testing"},
+        {"value": "stealth mode",        "description": "Confidential development"},
+        {"value": "under wraps",         "description": "Confidential project status"},
+        {"value": "not yet announced",   "description": "Pre-announcement"},
+        {"value": "pre-announcement",    "description": "Pre-announcement phase"},
+        {"value": "strategic initiative","description": "High-level internal initiative"},
+        {"value": "workstream",          "description": "Internal work division"},
+        {"value": "sprint goal",         "description": "Agile internal planning"}
+      ],
+
+      "patterns": [
+        {
+          "value": "\\bProject\\s+[A-Z][a-zA-Z]+\\b",
+          "is_regex": true,
+          "description": "Project + ProperNoun naming convention"
+        },
+        {
+          "value": "\\bOperation\\s+[A-Z][a-zA-Z]+\\b",
+          "is_regex": true,
+          "description": "Operation + ProperNoun naming convention"
+        },
+        {
+          "value": "\\b(Phase\\s+[1-9]|Milestone\\s+[1-9]|Sprint\\s+\\d+)\\b",
+          "is_regex": true,
+          "description": "Internal project phase/milestone/sprint references"
+        },
+        {
+          "value": "\\b[A-Z]{2,5}-\\d{3,6}\\b",
+          "is_regex": true,
+          "description": "Internal ticket/issue IDs e.g. PROJ-12345, ARCH-001"
+        }
+      ]
+    },
+
+    "org_structure": {
+      "entity_type": "ECI_ORG_INFO",
+      "token_label": "ORG_INFO",
+      "description": "Organizational structure: reporting lines, team compositions, leadership decisions",
+      "sensitivity_level": 2,
+      "enabled": true,
+      "slm_description": "who reports to whom, reporting structure, team compositions, department hierarchies, leadership decisions, org chart information, internal team names, division names, internal role assignments, budget ownership, team headcount targets, internal promotion decisions",
+
+      "keywords": [
+        {"value": "reports to",          "description": "Direct reporting line"},
+        {"value": "direct report",       "description": "Reporting relationship"},
+        {"value": "org chart",           "description": "Organizational chart"},
+        {"value": "org structure",       "description": "Organizational structure"},
+        {"value": "line manager",        "description": "Direct manager reference"},
+        {"value": "skip-level",          "description": "Skip-level reporting/meeting"},
+        {"value": "dotted line",         "description": "Indirect reporting line"},
+        {"value": "budget owner",        "description": "Internal budget responsibility"},
+        {"value": "cost center",         "description": "Internal financial unit"},
+        {"value": "business unit",       "description": "Internal org division"},
+        {"value": "Platform Engineering","description": "Internal team name example"},
+        {"value": "Core Infrastructure", "description": "Internal team name example"},
+        {"value": "People & Culture",    "description": "Internal HR team name"},
+        {"value": "Growth team",         "description": "Internal team name"},
+        {"value": "internal transfer",   "description": "Employee movement"},
+        {"value": "team reshuffle",      "description": "Org reorganization"},
+        {"value": "reorg",               "description": "Reorganization abbrev"},
+        {"value": "reorganization",      "description": "Structural change"},
+        {"value": "promotion decision",  "description": "Internal career decision"},
+        {"value": "leadership team",     "description": "Senior leadership reference"},
+        {"value": "exec team",           "description": "Executive team reference"},
+        {"value": "RACI",                "description": "Responsibility matrix"},
+        {"value": "escalation path",     "description": "Internal escalation chain"}
+      ],
+
+      "patterns": [
+        {
+          "value": "\\b(head|lead|director|VP|SVP|EVP|CTO|CFO|CEO|CPO|CMO)\\s+of\\s+[A-Z][a-zA-Z\\s]+\\b",
+          "is_regex": true,
+          "description": "Leadership role + department"
+        },
+        {
+          "value": "\\b[A-Z][a-z]+\\s+(team|squad|guild|chapter|tribe|pod)\\b",
+          "is_regex": true,
+          "description": "Internal team naming patterns"
+        },
+        {
+          "value": "\\b(manages?|managed\\s+by|leads?|led\\s+by|oversees?)\\s+a?\\s*(team|group|division|department)\\b",
+          "is_regex": true,
+          "description": "Management relationship language"
+        }
+      ]
+    },
+
+    "system_info": {
+      "entity_type": "ECI_SYSTEM_INFO",
+      "token_label": "SYSTEM_INFO",
+      "description": "Internal system names, server hostnames, credentials, API keys, infrastructure details",
+      "sensitivity_level": 3,
+      "enabled": true,
+      "slm_description": "internal server names, database hostnames, internal system names, API keys, access tokens, credentials, internal service names, internal endpoint URLs, infrastructure configuration details, environment names (production, staging, dev), internal tool names",
+
+      "keywords": [
+        {"value": "prod database",       "description": "Production DB reference"},
+        {"value": "production database", "description": "Production DB formal"},
+        {"value": "staging environment", "description": "Staging env reference"},
+        {"value": "dev environment",     "description": "Development env"},
+        {"value": "internal API",        "description": "Internal API reference"},
+        {"value": "admin panel",         "description": "Internal admin tool"},
+        {"value": "internal dashboard",  "description": "Internal monitoring tool"},
+        {"value": "secret key",          "description": "Credential marker"},
+        {"value": "access token",        "description": "Auth token reference"},
+        {"value": "API key",             "description": "API credential"},
+        {"value": "bearer token",        "description": "Auth bearer token"},
+        {"value": "private key",         "description": "Cryptographic key"},
+        {"value": "connection string",   "description": "Database connection credential"},
+        {"value": "password is",         "description": "Password disclosure"},
+        {"value": "the password",        "description": "Password reference"},
+        {"value": "credentials are",     "description": "Credential disclosure"},
+        {"value": "internal service",    "description": "Internal microservice"},
+        {"value": "microservice",        "description": "Internal service architecture"},
+        {"value": "message queue",       "description": "Internal messaging infra"},
+        {"value": "data warehouse",      "description": "Internal data platform"},
+        {"value": "data lake",           "description": "Internal data storage"}
+      ],
+
+      "patterns": [
+        {
+          "value": "\\b(db|database|mysql|postgres|mongo|redis|elastic)[-_](prod|staging|dev|test|uat|qa)[-_]?\\d*\\b",
+          "is_regex": true,
+          "description": "Database server naming convention"
+        },
+        {
+          "value": "\\b(api|svc|service|app|web|cache|queue|worker)[-_](prod|staging|dev|test|uat)[-_]?\\d*\\b",
+          "is_regex": true,
+          "description": "Internal service/server naming convention"
+        },
+        {
+          "value": "\\b[A-Za-z0-9_-]{20,}\\.[A-Za-z0-9_-]{6,}\\.[A-Za-z0-9_-]{10,}\\b",
+          "is_regex": true,
+          "description": "JWT token pattern"
+        },
+        {
+          "value": "\\b(sk-|pk-|rk-|ak-)[A-Za-z0-9]{20,}\\b",
+          "is_regex": true,
+          "description": "API key patterns (sk-, pk-, rk-, ak- prefixes)"
+        },
+        {
+          "value": "\\b[A-Za-z0-9+/]{40,}={0,2}\\b",
+          "is_regex": true,
+          "description": "Base64-encoded credentials or tokens"
+        },
+        {
+          "value": "\\b(AKIA|ASIA)[A-Z0-9]{16}\\b",
+          "is_regex": true,
+          "description": "AWS Access Key ID pattern"
+        },
+        {
+          "value": "\\b(https?://)(internal|intranet|corp|local|private)\\.[a-zA-Z0-9.-]+\\b",
+          "is_regex": true,
+          "description": "Internal/intranet URLs"
+        },
+        {
+          "value": "\\b10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+          "is_regex": true,
+          "description": "RFC1918 private IP range 10.x.x.x"
+        },
+        {
+          "value": "\\b192\\.168\\.\\d{1,3}\\.\\d{1,3}\\b",
+          "is_regex": true,
+          "description": "RFC1918 private IP range 192.168.x.x"
+        },
+        {
+          "value": "\\b172\\.(1[6-9]|2[0-9]|3[01])\\.\\d{1,3}\\.\\d{1,3}\\b",
+          "is_regex": true,
+          "description": "RFC1918 private IP range 172.16-31.x.x"
+        }
+      ]
+    }
+  }
+}
